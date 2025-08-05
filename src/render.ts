@@ -24,18 +24,21 @@ function getItemText(item: Stock) {
 
 function getTooltipText(item: Stock) {
 	const hasHold = item.hold_price && item.hold_number;
+	const avgPrice = item.average_price
+		? keepDecimal(item.average_price, 3)
+		: '-';
 	const tooltips = [
 		`【${item.name}】今日行情`,
 		`涨跌：${item.updown}   百分：${keepDecimal(item.percent * 100, 2)}%`,
 		`最高：${item.high}   最低：${item.low}`,
-		`今开：${item.open}   昨收：${item.yestclose}`,
+		`均价：${avgPrice}   今开：${item.open}   昨收：${item.yestclose}`,
 	];
 	if (hasHold) {
 		const balance = Math.round(
 			(item.price - item.hold_price) * item.hold_number,
 		);
 		const balanceStr = balance > 0 ? `+${balance}` : `${balance}`;
-		tooltips.push(`盈亏：${balanceStr}`);
+		ooltips.push(`盈亏：${balanceStr}`);
 	}
 	return tooltips.join('\n');
 }

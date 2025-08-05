@@ -116,6 +116,51 @@ class SinaStockTransform {
 	}
 
 	/**
+	 * 获取成交量（股）
+	 */
+	get volume(): number {
+		switch (this.code.slice(0, 2)) {
+			case 'sh':
+			case 'sz':
+			case 'bj':
+				return Number(this.params[8] || 0);
+			default:
+				return 0;
+		}
+	}
+
+	/**
+	 * 获取成交额（元）
+	 */
+	get turnover(): number {
+		switch (this.code.slice(0, 2)) {
+			case 'sh':
+			case 'sz':
+			case 'bj':
+				return Number(this.params[9] || 0);
+			default:
+				return 0;
+		}
+	}
+
+	/**
+	 * 获取成交均价
+	 */
+	get average_price(): number {
+		if (this.volume === 0) {
+			return 0;
+		}
+		switch (this.code.slice(0, 2)) {
+			case 'sh':
+			case 'sz':
+			case 'bj':
+				return this.turnover / this.volume;
+			default:
+				return 0;
+		}
+	}
+
+	/**
 	 * 获取涨跌
 	 */
 	get percent(): number {
@@ -162,6 +207,7 @@ class SinaStockTransform {
 			low: this.low,
 			high: this.high,
 			yestclose: this.yestclose,
+			average_price: this.average_price,
 		};
 	}
 }
