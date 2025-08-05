@@ -38,7 +38,7 @@ function getTooltipText(item: Stock) {
 			(item.price - item.hold_price) * item.hold_number,
 		);
 		const balanceStr = balance > 0 ? `+${balance}` : `${balance}`;
-		ooltips.push(`盈亏：${balanceStr}`);
+		tooltips.push(`盈亏：${balanceStr}`);
 	}
 	return tooltips.join('\n');
 }
